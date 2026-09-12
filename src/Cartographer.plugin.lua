@@ -540,7 +540,7 @@ versionBadge.BorderSizePixel = 0
 versionBadge.Font = Enum.Font.BuilderSansMedium
 versionBadge.TextSize = 10
 versionBadge.TextColor3 = Color3.fromRGB(196, 226, 246)
-versionBadge.Text = "v1.3"
+versionBadge.Text = "v1.3.1"
 local badgeCorner = make("UICorner", versionBadge) :: UICorner
 badgeCorner.CornerRadius = UDim.new(0, 4)
 

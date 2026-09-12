@@ -1,4 +1,4 @@
-# Cartographer v1.3.0
+# Cartographer v1.3.1
 
 Cartographer is a Roblox Studio plugin for authoring, validating, and enforcing mission zones. It is a complete generic foundation for objective, spawn, and danger areas, with team-safe spawn rules and clean runtime hooks for combat, inventory, and NPC systems.
 
