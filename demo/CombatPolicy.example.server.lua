@@ -1,4 +1,4 @@
--- Copyright (c) 2026 Stamyyyy. Licensed under the MIT License.
+-- Copyright (c) 2026 Stamyyyy. All rights reserved.
 --!strict
 
 local ServerScriptService = game:GetService("ServerScriptService")

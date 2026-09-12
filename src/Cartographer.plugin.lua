@@ -1,4 +1,4 @@
--- Copyright (c) 2026 Stamyyyy. Licensed under the MIT License.
+-- Copyright (c) 2026 Stamyyyy. All rights reserved.
 --!strict
 
 assert(plugin, "Cartographer must run as a Roblox Studio plugin")
@@ -540,7 +540,7 @@ versionBadge.BorderSizePixel = 0
 versionBadge.Font = Enum.Font.BuilderSansMedium
 versionBadge.TextSize = 10
 versionBadge.TextColor3 = Color3.fromRGB(196, 226, 246)
-versionBadge.Text = "v1.3.1"
+versionBadge.Text = "v1.3.2"
 local badgeCorner = make("UICorner", versionBadge) :: UICorner
 badgeCorner.CornerRadius = UDim.new(0, 4)
 
