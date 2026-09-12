@@ -392,10 +392,10 @@ local widgetInfo = DockWidgetPluginGuiInfo.new(
 	Enum.InitialDockState.Right,
 	false,
 	false,
-	360,
-	580,
-	300,
-	420
+	420,
+	680,
+	340,
+	480
 )
 local widget = plugin:CreateDockWidgetPluginGuiAsync(PLUGIN_ID, widgetInfo)
 widget.Title = WIDGET_TITLE
@@ -469,26 +469,99 @@ local function makeTextBox(parent: Instance, text: string, width: UDim): TextBox
 	return box
 end
 
-local heading = makeLabel(root, "Mission-zone builder", 24, false)
-heading.Font = Enum.Font.BuilderSansBold
-heading.TextSize = 19
+local banner = make("Frame", root) :: Frame
+banner.Size = UDim2.new(1, 0, 0, 82)
+banner.BackgroundColor3 = Color3.fromRGB(28, 47, 67)
+banner.BorderSizePixel = 0
+local bannerCorner = make("UICorner", banner) :: UICorner
+bannerCorner.CornerRadius = UDim.new(0, 7)
+local bannerStroke = make("UIStroke", banner) :: UIStroke
+bannerStroke.Color = Color3.fromRGB(102, 165, 210)
+bannerStroke.Transparency = 0.38
+local bannerGradient = make("UIGradient", banner) :: UIGradient
+bannerGradient.Rotation = 18
+bannerGradient.Color = ColorSequence.new({
+	ColorSequenceKeypoint.new(0, Color3.fromRGB(26, 44, 62)),
+	ColorSequenceKeypoint.new(0.54, Color3.fromRGB(42, 79, 108)),
+	ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 32, 45)),
+})
 
-makeLabel(root, "Create spatial objectives, spawn points, and danger zones directly inside your place.", 36, true)
+local bannerLine = make("Frame", banner) :: Frame
+bannerLine.Size = UDim2.new(1, -24, 0, 2)
+bannerLine.Position = UDim2.fromOffset(12, 10)
+bannerLine.BackgroundColor3 = Color3.fromRGB(142, 211, 250)
+bannerLine.BorderSizePixel = 0
 
-local nameLabel = makeLabel(root, "Zone name", 18, true)
+local mark = make("Frame", banner) :: Frame
+mark.Size = UDim2.fromOffset(42, 42)
+mark.Position = UDim2.fromOffset(12, 25)
+mark.BackgroundColor3 = Color3.fromRGB(18, 31, 45)
+mark.BorderSizePixel = 0
+local markCorner = make("UICorner", mark) :: UICorner
+markCorner.CornerRadius = UDim.new(0, 5)
+local markStroke = make("UIStroke", mark) :: UIStroke
+markStroke.Color = Color3.fromRGB(146, 211, 247)
+markStroke.Transparency = 0.18
+for index = 0, 2 do
+	local square = make("Frame", mark) :: Frame
+	square.Size = UDim2.fromOffset(8, 8)
+	square.Position = UDim2.fromOffset(8 + index * 9, 17 - index * 5)
+	square.BackgroundColor3 = Color3.fromRGB(181 - index * 22, 223 - index * 18, 247 - index * 12)
+	square.BorderSizePixel = 0
+	local squareCorner = make("UICorner", square) :: UICorner
+	squareCorner.CornerRadius = UDim.new(0, 2)
+end
+
+local bannerTitle = make("TextLabel", banner) :: TextLabel
+bannerTitle.BackgroundTransparency = 1
+bannerTitle.Position = UDim2.fromOffset(66, 24)
+bannerTitle.Size = UDim2.new(1, -138, 0, 22)
+bannerTitle.Font = Enum.Font.BuilderSansBold
+bannerTitle.TextSize = 18
+bannerTitle.TextColor3 = Color3.fromRGB(240, 246, 251)
+bannerTitle.TextXAlignment = Enum.TextXAlignment.Left
+bannerTitle.Text = "CARTOGRAPHER"
+
+local bannerSubtitle = make("TextLabel", banner) :: TextLabel
+bannerSubtitle.BackgroundTransparency = 1
+bannerSubtitle.Position = UDim2.fromOffset(67, 48)
+bannerSubtitle.Size = UDim2.new(1, -150, 0, 15)
+bannerSubtitle.Font = Enum.Font.BuilderSansMedium
+bannerSubtitle.TextSize = 10
+bannerSubtitle.TextColor3 = Color3.fromRGB(183, 213, 234)
+bannerSubtitle.TextXAlignment = Enum.TextXAlignment.Left
+bannerSubtitle.Text = "MISSION-ZONE SYSTEM"
+
+local versionBadge = make("TextLabel", banner) :: TextLabel
+versionBadge.BackgroundColor3 = Color3.fromRGB(16, 29, 42)
+versionBadge.Position = UDim2.new(1, -58, 0, 29)
+versionBadge.Size = UDim2.fromOffset(44, 24)
+versionBadge.BorderSizePixel = 0
+versionBadge.Font = Enum.Font.BuilderSansMedium
+versionBadge.TextSize = 10
+versionBadge.TextColor3 = Color3.fromRGB(196, 226, 246)
+versionBadge.Text = "v1.3"
+local badgeCorner = make("UICorner", versionBadge) :: UICorner
+badgeCorner.CornerRadius = UDim.new(0, 4)
+
+makeLabel(root, "Build a zone, select it when you need to edit, then validate before you playtest.", 36, true)
+
+makeLabel(root, "1 / CREATE A ZONE", 18, false)
+local nameLabel = makeLabel(root, "Name", 18, true)
 local nameBox = makeTextBox(root, "Objective", UDim.new(1, 0))
 nameBox.Size = UDim2.new(1, 0, 0, 32)
 
-makeLabel(root, "Zone type", 18, true)
-local typeButton = makeButton(root, "Type: Objective", false)
+makeLabel(root, "Type — click to cycle", 18, true)
+local typeButton = makeButton(root, "Objective", false)
 
-makeLabel(root, "Zone policy", 18, true)
+makeLabel(root, "2 / EDIT THE SELECTED ZONE", 18, false)
+makeLabel(root, "Policies — click a control to switch it", 18, true)
 local firingButton = makeButton(root, "Firing: allowed", false)
 local equipButton = makeButton(root, "Equip tools: allowed", false)
 local enemyButton = makeButton(root, "Enemy access: allowed", false)
 local playerAccessButton = makeButton(root, "Players: everyone", false)
 
-makeLabel(root, "Size (studs)", 18, true)
+makeLabel(root, "Size in studs", 18, true)
 local sizeRow = make("Frame", root) :: Frame
 sizeRow.Size = UDim2.new(1, 0, 0, 32)
 sizeRow.BackgroundTransparency = 1
@@ -500,17 +573,18 @@ local sizeX = makeTextBox(sizeRow, tostring(DEFAULT_SIZE.X), UDim.new(1 / 3, 0))
 local sizeY = makeTextBox(sizeRow, tostring(DEFAULT_SIZE.Y), UDim.new(1 / 3, 0))
 local sizeZ = makeTextBox(sizeRow, tostring(DEFAULT_SIZE.Z), UDim.new(1 / 3, 0))
 
-makeLabel(root, "Presentation", 18, true)
+makeLabel(root, "Map presentation", 18, true)
 local colorVisibilityButton = makeButton(root, "Zone colour: visible", false)
 local titleVisibilityButton = makeButton(root, "Zone title: visible", false)
 local debugOverlayButton = makeButton(root, "Runtime debug overlay: off", false)
 
-makeLabel(root, "Zone groups", 18, true)
+makeLabel(root, "3 / GROUPS, PRESETS & EVENTS", 18, false)
+makeLabel(root, "Zone group", 18, true)
 local groupBox = makeTextBox(root, "Ungrouped", UDim.new(1, 0))
 groupBox.Size = UDim2.new(1, 0, 0, 32)
 local groupToggleButton = makeButton(root, "Toggle selected group", false)
 
-makeLabel(root, "Preset library", 18, true)
+makeLabel(root, "Preset — click to cycle", 18, true)
 local presetButton = makeButton(root, "Preset: Custom", false)
 
 makeLabel(root, "Mission events", 18, true)
@@ -526,26 +600,27 @@ local customEventBox = makeTextBox(root, "", UDim.new(1, 0))
 customEventBox.Size = UDim2.new(1, 0, 0, 32)
 customEventBox.PlaceholderText = "Custom server event name (optional)"
 
-local createButton = makeButton(root, "Create zone", true)
-local applyButton = makeButton(root, "Apply settings to selected zone", false)
+makeLabel(root, "4 / MANAGE & PLAYTEST", 18, false)
+local createButton = makeButton(root, "Create zone from these settings", true)
+local applyButton = makeButton(root, "Apply changes to selected zone", false)
 local duplicateButton = makeButton(root, "Duplicate selected zone", false)
 local deleteButton = makeButton(root, "Delete selected zone", false)
-local validateButton = makeButton(root, "Validate all zones", false)
-local exportButton = makeButton(root, "Export runtime manifest", false)
+local validateButton = makeButton(root, "Check all zones", false)
+local exportButton = makeButton(root, "Publish runtime manifest", false)
 
 makeLabel(root, "Zone browser", 18, true)
-local refreshZonesButton = makeButton(root, "Refresh zone browser", false)
+local refreshZonesButton = makeButton(root, "Refresh zone list", false)
 local nextZoneButton = makeButton(root, "Select next zone", false)
-local repairSetupButton = makeButton(root, "Repair automatic setup", false)
+local repairSetupButton = makeButton(root, "Repair missing setup", false)
 local zoneBrowser = makeLabel(root, "No zones in the place yet.", 62, true)
 zoneBrowser.TextYAlignment = Enum.TextYAlignment.Top
 zoneBrowser.TextWrapped = true
 
-makeLabel(root, "Sample NPC models", 18, true)
+makeLabel(root, "Playtest NPCs", 18, true)
 local alliedGuardButton = makeButton(root, "Create Allied Guard", false)
 local enemyGuardButton = makeButton(root, "Create Enemy Guard", false)
 
-local status = makeLabel(root, "Ready. Select a part to use its placement and size, or create a zone in front of the Studio camera.", 55, true)
+local status = makeLabel(root, "Ready. Select a part to copy its placement and size, or create a zone in front of the Studio camera.", 55, true)
 status.TextYAlignment = Enum.TextYAlignment.Top
 status.TextWrapped = true
 
@@ -579,7 +654,7 @@ local function refreshMissionControls()
 end
 
 local function setTypeAppearance()
-	typeButton.Text = `Type: {selectedType}`
+	typeButton.Text = selectedType
 	typeButton.BackgroundColor3 = typeColors[selectedType]:Lerp(Color3.fromRGB(37, 40, 47), 0.4)
 end
 
